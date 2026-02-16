@@ -6,8 +6,8 @@ A lightweight, hardware-level screen blanker for Linux that triggers a total bla
 
 ## 🚀 Features
 - **Environment Agnostic:** Works on X11 and Wayland by monitoring `/dev/input`.
-- **Hardware Direct:** Auto-detects your keyboard (tested on PC Power K98).
-- **Smart Sensitivity:** Prevents accidental exits from high-DPI mouse jitter (optimized for MSI Forge GM300).
+- **Hardware Direct:** Auto-detects your keyboard.
+- **Smart Sensitivity:** Prevents accidental exits from high-DPI mouse jitter.
 - **Low Resource:** Minimal CPU impact; sits idle until the interrupt is triggered.
 
 ## 🛠 Prerequisites
