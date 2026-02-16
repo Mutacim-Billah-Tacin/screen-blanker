@@ -1,3 +1,5 @@
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 # Universal Linux F6 Screen Blanker
 
 A lightweight, hardware-level screen blanker for Linux that triggers a total black-out when **F6** is pressed. Unlike standard screensavers, this listens directly to the kernel input events, making it compatible across all Desktop Environments (GNOME, KDE, XFCE) and Window Managers.
@@ -43,6 +45,3 @@ The installation script handles these automatically, but for reference:
 If you want to change the trigger key or the mouse sensitivity:
 - **Change Key:** Edit `watcher.sh` and replace `KEY_F6` with your preferred key (run `sudo evtest` to find your key codes).
 - **Adjust Sensitivity:** Edit `blanker.py` and change the `dx > 10` threshold in the `handle_mouse` function.
-
-## 📜 License
-MIT
