@@ -5,34 +5,36 @@ import sys
 
 class UniversalBlanker:
     def __init__(self):
-        # Ensure the script knows which display to use (standard for Linux is :0)
-        if "DISPLAY" not in os.environ:
-            os.environ["DISPLAY"] = ":0"
-            
+        # We don't force :0 here because the watcher.sh now exports the 
+        # correct WAYLAND_DISPLAY or DISPLAY for us.
+        
         try:
             self.root = tk.Tk()
         except tk.TclError:
-            # If :0 fails, try to grab the current user's display
-            print("Could not connect to display :0, exiting.")
+            print("Could not connect to the graphical session. Exiting.")
             sys.exit(1)
         
-        # 1. Screen Dimensions
-        self.width = self.root.winfo_screenwidth()
-        self.height = self.root.winfo_screenheight()
-        
-        # 2. Setup Window
+        # 1. Setup Window
+        # Removes borders (X11) and hints to the WM to stay out of the way
         self.root.overrideredirect(True) 
-        self.root.geometry(f"{self.width}x{self.height}+0+0")
-        self.root.configure(background='black')
+        
+        # Wayland-friendly Fullscreen
+        self.root.attributes('-fullscreen', True)
+        
+        # Safety for X11/High-end WMs
         self.root.attributes('-topmost', True)
+        
+        self.root.configure(background='black')
         self.root.config(cursor="none")
 
-        # 3. State Management
+        # 2. State Management
         self.last_mouse_pos = None
         self.ready_to_exit = False
+        
+        # 500ms grace period so the F6 press itself doesn't close the window
         self.root.after(500, self.enable_exit)
 
-        # 4. Bindings
+        # 3. Bindings
         self.root.bind('<Any-KeyPress>', self.exit_app)
         self.root.bind('<Button-1>', self.exit_app)
         self.root.bind('<Motion>', self.handle_mouse)
@@ -45,11 +47,16 @@ class UniversalBlanker:
 
     def handle_mouse(self, event):
         if not self.ready_to_exit: return
+        
+        # Initial position capture
         if self.last_mouse_pos is None:
             self.last_mouse_pos = (event.x, event.y)
             return
+            
+        # Calculate movement delta (10px threshold for MSI Forge GM300 jitter)
         dx = abs(event.x - self.last_mouse_pos[0])
         dy = abs(event.y - self.last_mouse_pos[1])
+        
         if dx > 10 or dy > 10:
             self.exit_app()
 
