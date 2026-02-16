@@ -20,8 +20,8 @@ The installation script handles these automatically, but for reference:
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/yourusername/f6-blanker.git](https://github.com/yourusername/f6-blanker.git)
-   cd f6-blanker
+   git clone 
+   cd screen-blanker
    ```
 
 2. **Run the installer:**
