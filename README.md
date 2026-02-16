@@ -34,7 +34,9 @@ The installation script handles these automatically, but for reference:
    You must log out and log back in (or reboot). This allows the system to apply the new `input` group permissions so the script can read your keyboard events without needing `sudo` every time.
 
 ## 🖥 How it Works
-1. **Watcher:** A Bash script uses evtest to monitor your keyboard's event slot.
-2. **Trigger:** When the hex code for F6 is detected, it launches the Python script.
+1. **Watcher:** A Bash script uses `evtest` to monitor your keyboard's event slot.
+2. **Trigger:** When the hex code for `F6` is detected, it launches the Python script.
 3. **Overlay:** The Python script creates a black, fullscreen, "topmost" Tkinter window.
 4. **Exit:** Pressing any key or moving the mouse more than 10 pixels destroys the window.
+
+## 🔧 Configuration
